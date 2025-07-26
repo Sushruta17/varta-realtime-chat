@@ -45,8 +45,18 @@ cd varta-realtime-chat
 2. **Install All Dependencies**
 
 ```bash
+npm run build
+
+```
+
+Alternatively, install manually:
+
+```bash
+cd backend
 npm install
 
+cd ../frontend
+npm install
 ```
 
 3. **Configure Environment Variables**
@@ -72,6 +82,7 @@ NODE_ENV=development
 cd backend
 npm run dev
 ```
+
 - **Frontend**
 
 ```bash
@@ -79,11 +90,8 @@ cd ../frontend
 npm run dev
 ```
 
+From the root (after build), start the backend in production:
 
-## Scripts
-
-From the root :
-
-- `npm install` – Installs all dependencies in both frontend \& backend
-- `npm run dev` – Starts development servers
-- `npm run build` (frontend) – Production build
+```bash
+npm run start
+```
