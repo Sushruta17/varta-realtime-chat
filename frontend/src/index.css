@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+}
+:root {
+  --icosahedron-r: 20vmin; /* Defining $r as a CSS variable */
+}
+
+/* Base styles for HTML, Body - these are crucial for 3D perspective */
+html, body {
+  height: 100%;
+  margin: 0; /* Important to remove default body margin */
+  padding: 0; /* Important to remove default body padding */
+  display: grid; /* For centering the main app content */
+  overflow: hidden; /* Prevent scrollbars from 3D elements extending */
+}
+
+body {
+  perspective: 25em; /* Creates the 3D perspective */
+  background: #212121; /* This will be overridden by tailwind's bg-base-200 in the component */
+}
+
+/* The .a3d container holds the 3D scene */
+.a3d {
+  transform-style: preserve-3d; /* Essential for 3D transformations of children */
+  animation: ry 8s linear infinite; /* Main rotation animation */
+  /* Ensure it fills its parent and is centered within it */
+  width: 100%;
+  height: 100%;
+  display: flex; /* Used to center the scene */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Individual vertex elements */
+.vx {
+  /* Fix: Use calc() for mathematical operations with CSS variables */
+  padding: calc(0.5 * var(--icosahedron-r));
+  border-radius: 50%;
+  /* Change: Use transform: translate3d for better compatibility and explicit 3D */
+  transform: translate3d(
+    calc(var(--icosahedron-r) * var(--v0)),
+    calc(var(--icosahedron-r) * var(--v1)),
+    calc(var(--icosahedron-r) * var(--v2))
+  );
+  background:
+    radial-gradient(at 27% 32%, #fffd, #0000),
+    radial-gradient(at 65% 85%, #fff9, #0000 65%)
+    tomato;
+  filter: saturate(2);
+  animation: inherit; /* Inherit the ry animation from .a3d */
+  animation-direction: reverse; /* Make it rotate in the opposite direction */
+  position: absolute; /* Crucial for positioning in 3D space */
+  transform-origin: center center; /* Ensure transformations are from the center */
+  /* Add a temporary border for debugging visibility */
+  /* border: 1px solid rgba(255, 255, 255, 0.2); */
+}
+
+.vx::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(at 15% 15%,
+                    #0000 57.5%, #0004 65%, #0000 85%);
+  mask: linear-gradient(45deg, #0000 25%, red);
+  content: '';
+}
+
+/* Keyframe animation for rotation */
+ @keyframes ry {
+        to { 
+          transform: rotateY(360deg); 
+        }
+      }
